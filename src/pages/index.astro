@@ -38,6 +38,10 @@ import Layout from "../layouts/Layout.astro";
         Unruled Play is twenty years of doing the same work in a <em>different</em> room — through design, play, games and visual facilitation.
       </p>
 
+      <p class="disciplines fade-up">
+        Design<span class="sep"></span>Futures scenario building<span class="sep"></span>Visual thinking<span class="sep"></span>Creative confidence<span class="sep"></span>Co-creation<span class="sep"></span>Games<span class="sep"></span>Games-based learning<span class="sep"></span>Organisational change<span class="sep"></span>Digital product development<span class="sep"></span>Facilitation
+      </p>
+
       <div class="cta-row fade-up">
         <a class="button button-primary" href="#">Try the tools &rarr;</a>
         <a class="button button-ghost" href="#">Read the thinking</a>
@@ -171,6 +175,19 @@ import Layout from "../layouts/Layout.astro";
   .subhead em {
     color: var(--colour-accent);
     font-style: italic;
+  }
+
+  .disciplines {
+    animation-delay: 0.28s;
+    margin: 1.25rem 0 0;
+    max-width: 70ch;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: color-mix(in srgb, var(--colour-text) 78%, white);
+  }
+
+  .disciplines .sep::before {
+    content: " · ";
   }
 
   .cta-row {
