@@ -382,6 +382,40 @@ const writingPosts = [
         <strong>All six are free, open to anyone, no account needed.</strong> Built as part of my vibecoding journey — a working proof that the room doesn't need a platform.
       </p>
     </section>
+
+    <section class="about reveal" id="about">
+      <header class="about-head">
+        <span class="eyebrow">About</span>
+      </header>
+
+      <div class="about-grid">
+        <div class="about-photo">
+          <img
+            src="/susanne.png"
+            alt="Susanne Krogh Hansen, laughing with her hands raised"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="about-content">
+          <h2 class="about-name">Susanne Krogh Hansen.</h2>
+          <p class="about-lead">
+            I design in large engineering companies by day. By day and, honestly, by most of my other hours too — Unruled Play is the practice I run alongside the day job, not a side project. Twenty years in organisational change, design, and strategy departments, across enterprises where spreadsheets ran the building and design was something people suspected but couldn't quite locate.
+          </p>
+          <p>
+            Once, I ran a design thinking session with 280 people in the digital department of the toy company I work at. The exercise was to design for aliens. I will remember, for a long time, the moment I noticed a director lying on the floor in a black garbage bag, tentacles in his hair, because he had just designed a sleeping bag for his alien. That is the kind of room Unruled Play tries to produce on purpose — not the tentacles specifically, but the fact that a senior decision-maker, in a session about product strategy, ended up on the floor solving a real problem without a slide in sight.
+          </p>
+          <p>
+            Based in Copenhagen. If the work above sounds like it belongs in your organisation — or if you just want to talk about flipcharts, games, or what's wrong with your next workshop — write to me at <a class="about-link" href="mailto:susanne@unruledplay.net">susanne@unruledplay.net</a> or find me on <a
+              class="about-link"
+              href="https://www.linkedin.com/in/susannekroghhansen/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >LinkedIn</a>.
+          </p>
+        </div>
+      </div>
+    </section>
   </main>
 </Layout>
 
@@ -946,6 +980,92 @@ const writingPosts = [
     font-weight: var(--font-weight-semibold);
   }
 
+  .about {
+    width: min(1080px, 100%);
+    align-self: center;
+    margin-top: 160px;
+    --fg1: var(--colour-text);
+    --fg2: color-mix(in srgb, var(--colour-text) 74%, transparent);
+    --accent: var(--colour-accent);
+    --border: var(--colour-border);
+    --aubergine-700: color-mix(in srgb, var(--colour-surface) 62%, black);
+    --muted: color-mix(in srgb, var(--colour-text) 58%, transparent);
+  }
+
+  .about-head {
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about .eyebrow {
+    display: inline-block;
+    margin: 0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .about-grid {
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: minmax(260px, 0.8fr) 1.2fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .about-photo {
+    aspect-ratio: 4 / 3;
+    background: var(--aubergine-700);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .about-photo img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+
+  .about-name {
+    margin: 0 0 30px;
+    font-size: 32px;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    color: var(--fg1);
+  }
+
+  .about-content p {
+    margin: 0 0 22px;
+    font-size: 17px;
+    line-height: 1.65;
+    font-weight: 400;
+    color: var(--fg2);
+    text-wrap: pretty;
+  }
+
+  .about-content p.about-lead {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--fg1);
+  }
+
+  .about-link {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(243, 198, 214, 0.35);
+    transition: border-color var(--motion-duration-base) var(--motion-ease-standard);
+  }
+
+  .about-link:hover {
+    border-bottom-color: var(--accent);
+  }
+
   .fade-up {
     opacity: 0;
     transform: translateY(14px);
@@ -1023,6 +1143,27 @@ const writingPosts = [
 
     .tool-card {
       padding: 20px 18px;
+    }
+
+    .about {
+      margin-top: 100px;
+    }
+
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .about-name {
+      font-size: 26px;
+    }
+
+    .about-content p {
+      font-size: 16px;
+    }
+
+    .about-content p.about-lead {
+      font-size: 16.5px;
     }
   }
 </style>
