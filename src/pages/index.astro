@@ -1,5 +1,35 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const substackUrl = "https://bysukro.substack.com/";
+
+const featuredWriting = {
+  date: "7 Apr 2026",
+  title: "U is for Unfinished",
+  excerpt:
+    "If I had finished that sketch neatly and confidently, I suspect the conversation would have been shorter, politer, less honest. And maybe it would even have ended with a — oh Susanne you are such a talented artist (which I definitely do not consider myself to be).",
+};
+
+const writingPosts = [
+  {
+    date: "24 Mar 2026",
+    title: "D is for Doodles",
+    excerpt:
+      "Somewhere along the way, doodling got itself a PR problem. A room full of smart adults, suddenly very fascinated by their laptops.",
+  },
+  {
+    date: "14 Mar 2026",
+    title: "Sketching abroad",
+    excerpt:
+      "Turns out that when you let go of perfection, your characters start to talk back. Mine are now sassier than I am. One is demanding a Vespa.",
+  },
+  {
+    date: "12 Feb 2026",
+    title: "Stop trying to be Spotify",
+    excerpt:
+      "We had the ingredients. But not the recipe. And worse — we were trying to follow someone else's cookbook.",
+  },
+];
 ---
 
 <Layout title="Unruled Play">
@@ -61,6 +91,89 @@ import Layout from "../layouts/Layout.astro";
           <dd>Flipcharts, markers, spritzes</dd>
         </div>
       </dl>
+    </section>
+
+    <section class="positioning reveal" id="practice">
+      <span class="eyebrow">What Unruled Play is</span>
+      <p class="lead">Most important decisions in large enterprises get made in rooms that are too small, in formats that are too flat, by people under too much time pressure. The people who know the most are often not in the room at all. And the conversation starts in solution mode — jumping straight to what to build, what to buy, what to launch — before anyone has looked properly at what the problem actually is.</p>
+      <p>Unruled Play works on the opposite premise. That the hard problems — strategy, product, change — get better when the room is bigger, the format is visible, and the conversation has real play in it. Twenty years across design, product, and change has taught me one thing without ambiguity. <span class="hard">The room is not a nice-to-have. The room is the work.</span></p>
+    </section>
+
+    <section class="expertises reveal" aria-label="Expertises"></section>
+
+    <section class="writing reveal" id="writing">
+      <header class="writing-head">
+        <p class="eyebrow">Recent writing</p>
+        <a class="writing-meta" href={substackUrl} target="_blank" rel="noopener noreferrer">On Substack ↗</a>
+      </header>
+
+      <a
+        class="post-featured"
+        href={substackUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div class="post-featured-media">
+          <svg
+            class="post-featured-svg"
+            viewBox="0 0 120 120"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              d="M60 14 L106 42 L86 98 L34 98 L14 42 Z"
+              fill="currentColor"
+              opacity="0.22"
+            />
+            <path d="M60 14 L60 70 L14 42 Z" fill="currentColor" opacity="0.14" />
+            <path d="M60 14 L106 42 L60 70 Z" fill="currentColor" opacity="0.32" />
+            <path
+              d="M60 70 L86 98 L34 98 Z"
+              fill="currentColor"
+              opacity="0.2"
+            />
+          </svg>
+        </div>
+        <div class="post-featured-body">
+          <div class="post-featured-top">
+            <span class="post-date">{featuredWriting.date}</span>
+            <span class="post-tag">Latest</span>
+          </div>
+          <h2 class="post-title">{featuredWriting.title}</h2>
+          <p class="post-excerpt">{featuredWriting.excerpt}</p>
+          <span class="post-cta">Read →</span>
+        </div>
+      </a>
+
+      <div class="posts-row">
+        {
+          writingPosts.map((post) => (
+            <a
+              class="post-card"
+              href={substackUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="post-date">{post.date}</span>
+              <h3 class="post-title">{post.title}</h3>
+              <p class="post-excerpt">{post.excerpt}</p>
+              <span class="post-cta">Read →</span>
+            </a>
+          ))
+        }
+      </div>
+
+      <footer class="writing-footer">
+        <a
+          class="button button-ghost writing-subscribe"
+          href={substackUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Subscribe on Substack →
+        </a>
+      </footer>
     </section>
   </main>
 </Layout>
@@ -262,6 +375,230 @@ import Layout from "../layouts/Layout.astro";
     font-size: 0.96rem;
   }
 
+  .positioning {
+    --fg1: var(--colour-text);
+    --fg2: color-mix(in srgb, var(--colour-text) 74%, transparent);
+    --border: var(--colour-border);
+    --muted: color-mix(in srgb, var(--colour-text) 58%, transparent);
+    margin-top: 180px;
+    max-width: 820px;
+  }
+  .positioning .eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 36px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    width: 100%;
+  }
+  .positioning p {
+    margin: 0 0 26px;
+    font-size: 22px;
+    line-height: 1.55;
+    font-weight: 400;
+    color: var(--fg2);
+    letter-spacing: -0.005em;
+    text-wrap: pretty;
+  }
+  .positioning p.lead {
+    color: var(--fg1);
+    font-weight: 500;
+  }
+  .positioning p .hard {
+    color: var(--fg1);
+    font-weight: 500;
+  }
+
+  .writing {
+    margin-top: clamp(4rem, 10vw, 10rem);
+    width: 100%;
+    max-width: 1080px;
+    align-self: center;
+    --aubergine-600: var(--colour-surface-muted);
+    --aubergine-700: color-mix(in srgb, var(--colour-surface) 62%, black);
+    --fg1: var(--colour-text);
+    --fg2: color-mix(in srgb, var(--colour-text) 74%, transparent);
+    --accent: var(--colour-accent);
+    --border: var(--colour-border);
+    --muted-soft: color-mix(in srgb, var(--colour-text) 58%, transparent);
+  }
+
+  .writing-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem 1.5rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .writing .eyebrow {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted-soft);
+  }
+
+  .writing-meta {
+    font-size: 0.84rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--fg2);
+    text-decoration: none;
+    transition: color var(--motion-duration-fast) var(--motion-ease-standard);
+  }
+
+  .writing-meta:hover {
+    color: var(--fg1);
+  }
+
+  .post-featured {
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: minmax(280px, 0.8fr) 1.2fr;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background: var(--aubergine-600);
+  }
+
+  .post-featured-media {
+    min-height: 260px;
+    background: var(--aubergine-700);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    color: var(--accent);
+  }
+
+  .post-featured-svg {
+    width: min(200px, 55%);
+    height: auto;
+  }
+
+  .post-featured-body {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .post-featured-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+  }
+
+  .writing .post-date {
+    font-size: 11px;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted-soft);
+  }
+
+  .post-tag {
+    font-size: 10px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    border-radius: var(--radius-pill);
+    padding: 0.2rem 0.55rem;
+  }
+
+  .post-featured .post-title {
+    margin: 0;
+    font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-tight);
+    color: var(--fg1);
+    text-wrap: balance;
+  }
+
+  .post-featured .post-excerpt {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--fg2);
+  }
+
+  .writing .post-cta {
+    font-size: 13px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--accent);
+  }
+
+  .post-featured .post-cta {
+    margin-top: 0.25rem;
+  }
+
+  .posts-row {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .post-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1.35rem;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--aubergine-600);
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--motion-duration-fast) var(--motion-ease-standard);
+  }
+
+  .post-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .post-card .post-title {
+    margin: 0.55rem 0 0;
+    font-size: 19px;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.2;
+    color: var(--fg1);
+    text-wrap: balance;
+  }
+
+  .post-card .post-excerpt {
+    margin: 0.45rem 0 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--fg2);
+    flex-grow: 1;
+  }
+
+  .post-card .post-cta {
+    margin-top: 1rem;
+  }
+
+  .writing-footer {
+    margin-top: 1.75rem;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .writing-subscribe {
+    padding: 0.65rem 1.05rem;
+    font-size: 0.92rem;
+  }
+
   .fade-up {
     opacity: 0;
     transform: translateY(14px);
@@ -297,6 +634,31 @@ import Layout from "../layouts/Layout.astro";
     .meta-strip {
       grid-template-columns: 1fr;
       gap: 0.85rem;
+    }
+
+    .writing-head {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .post-featured {
+      grid-template-columns: 1fr;
+    }
+
+    .post-featured-media {
+      min-height: 180px;
+    }
+
+    .posts-row {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .positioning {
+      margin-top: 120px;
+    }
+    .positioning p {
+      font-size: 18px;
     }
   }
 </style>
