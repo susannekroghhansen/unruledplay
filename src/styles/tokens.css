@@ -1,0 +1,58 @@
+:root {
+  --colour-primary: #6a2a4e;
+  --colour-primary-dark: #4e1d3a;
+  --colour-text: #3a1e30;
+  --colour-blush: #fbe4ec;
+  --colour-accent: #f3c6d6;
+  --colour-surface: #fff7fb;
+  --colour-surface-muted: #fdeef4;
+  --colour-border: rgba(58, 30, 48, 0.14);
+
+  --font-family-base: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-size-body: 1rem;
+  --font-size-h1: clamp(2.5rem, 6vw, 4.375rem);
+  --line-height-body: 1.6;
+  --line-height-tight: 1.08;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --radius-xs: 0.4rem;
+  --radius-sm: 0.65rem;
+  --radius-md: 0.95rem;
+  --radius-pill: 999px;
+
+  --shadow-soft: 0 10px 30px rgba(78, 29, 58, 0.1);
+  --shadow-medium: 0 18px 45px rgba(78, 29, 58, 0.2);
+
+  --motion-duration-fast: 160ms;
+  --motion-duration-base: 280ms;
+  --motion-duration-slow: 550ms;
+  --motion-ease-standard: cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.theme-dark {
+  --colour-primary: #f3c6d6;
+  --colour-primary-dark: #fbe4ec;
+  --colour-text: #fbe4ec;
+  --colour-blush: #6a2a4e;
+  --colour-accent: #f3c6d6;
+  --colour-surface: #2e1224;
+  --colour-surface-muted: #3a1e30;
+  --colour-border: rgba(251, 228, 236, 0.2);
+  --shadow-soft: 0 12px 34px rgba(0, 0, 0, 0.26);
+  --shadow-medium: 0 20px 52px rgba(0, 0, 0, 0.35);
+}
+
+.dot-grid {
+  background-color: var(--colour-surface);
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    color-mix(in srgb, var(--colour-accent) 45%, transparent) 1px,
+    transparent 0
+  );
+  background-size: 20px 20px;
+  background-attachment: fixed;
+}
