@@ -35,7 +35,7 @@ const writingPosts = [
 
 <Layout title="Unruled Play">
   <main class="page-shell">
-    <nav class="top-nav fade-up" aria-label="Primary navigation">
+    <nav id="top" class="nav fade-up" aria-label="Primary navigation">
       <a class="brand" href="/">
         <span class="origami-mark" aria-hidden="true">
           <span></span>
@@ -51,13 +51,13 @@ const writingPosts = [
 
       <div class="nav-actions">
         <ul class="nav-links">
-          <li><a href="#">Tools</a></li>
-          <li><a href="#">Writing</a></li>
-          <li><a href="#">Practice</a></li>
-          <li><a href="#">Shop</a></li>
-          <li><a href="#">About</a></li>
+          <li><a href="#practice">Practice</a></li>
+          <li><a href="#tools">Tools</a></li>
+          <li><a href="#writing">Writing</a></li>
+          <li><a href="#shop">Shop</a></li>
+          <li><a href="#about">About</a></li>
         </ul>
-        <a class="button button-ghost" href="#">Say hello</a>
+        <a class="button button-ghost" href="mailto:susanne@unruledplay.net?subject=Saying hello">Say hello</a>
       </div>
     </nav>
 
@@ -74,8 +74,8 @@ const writingPosts = [
       </p>
 
       <div class="cta-row fade-up">
-        <a class="button button-primary" href="#">Try the tools &rarr;</a>
-        <a class="button button-ghost" href="#">Read the thinking</a>
+        <a class="button button-primary" href="#tools">Try the tools &rarr;</a>
+        <a class="button button-ghost" href="#writing">Read the thinking</a>
       </div>
 
       <dl class="meta-strip fade-up">
@@ -416,7 +416,93 @@ const writingPosts = [
         </div>
       </div>
     </section>
+
+    <section class="shop-placeholder reveal" id="shop">
+      <header class="shop-head">
+        <span class="eyebrow">Shop</span>
+      </header>
+      <h2 class="shop-heading">Opening soon.</h2>
+      <p class="shop-lead">
+        Card games, templates, facilitation skill descriptions, and prompts — the things I actually use in rooms. Coming when they're ready to be used in yours.
+      </p>
+      <p class="shop-note">
+        Drop your email and I'll write when the first thing ships. <a
+          class="about-link"
+          href="mailto:susanne@unruledplay.net?subject=Tell me when the shop opens"
+          >Let me know →</a>
+      </p>
+    </section>
   </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-cols">
+        <div class="footer-brand">
+          <a class="brand" href="#top">
+            <span class="origami-mark" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+            <span class="brand-text">
+              <span>unruled</span>
+              <span class="brand-dot" aria-hidden="true"></span>
+              <span>play</span>
+            </span>
+          </a>
+          <p class="footer-tagline">
+            A design, facilitation, and serious play practice based in Copenhagen.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <p class="col-label">Site</p>
+          <ul class="footer-links">
+            <li><a href="#tools">Tools</a></li>
+            <li><a href="#writing">Writing</a></li>
+            <li><a href="#practice">Practice</a></li>
+            <li><a href="#shop">Shop</a></li>
+            <li><a href="#about">About</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <p class="col-label">Elsewhere</p>
+          <ul class="footer-links">
+            <li>
+              <a href="mailto:susanne@unruledplay.net">Email</a>
+            </li>
+            <li>
+              <a
+                href="https://www.linkedin.com/in/susannekroghhansen/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn
+              </a>
+            </li>
+            <li>
+              <a href={substackUrl} target="_blank" rel="noopener noreferrer">Substack</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-note">
+          <p class="col-label">Currently</p>
+          <p class="footer-note-text">
+            <em>Unruled Play is a practice in motion.</em> The shop is in the works. The tools are live. Come back often.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-meta">
+        <span class="footer-meta-left">© 2026 Susanne Krogh Hansen · Copenhagen</span>
+        <span class="footer-colophon">
+          Built with Astro · served from Aze · set in Inter
+        </span>
+      </div>
+    </div>
+  </footer>
 </Layout>
 
 <style>
@@ -429,7 +515,7 @@ const writingPosts = [
     gap: 3.75rem;
   }
 
-  .top-nav {
+  .nav {
     animation-delay: 0s;
     display: flex;
     justify-content: space-between;
@@ -1066,6 +1152,161 @@ const writingPosts = [
     border-bottom-color: var(--accent);
   }
 
+  .shop-placeholder {
+    width: min(1080px, 100%);
+    align-self: center;
+    margin-top: 160px;
+    --fg1: var(--colour-text);
+    --fg2: color-mix(in srgb, var(--colour-text) 74%, transparent);
+    --muted: color-mix(in srgb, var(--colour-text) 58%, transparent);
+    --border: var(--colour-border);
+    --accent: var(--colour-accent);
+  }
+
+  .shop-head {
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .shop-placeholder .eyebrow {
+    display: inline-block;
+    margin: 0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .shop-heading {
+    margin: 1.5rem 0 0;
+    font-size: 32px;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    color: var(--fg1);
+  }
+
+  .shop-lead {
+    margin: 1.25rem 0 0;
+    max-width: 740px;
+    font-size: 18px;
+    line-height: 1.65;
+    font-weight: 400;
+    color: var(--fg2);
+    text-wrap: pretty;
+  }
+
+  .shop-note {
+    margin: 1.25rem 0 0;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  .footer {
+    --fg1: var(--colour-text);
+    --fg2: color-mix(in srgb, var(--colour-text) 78%, transparent);
+    --muted-soft: color-mix(in srgb, var(--colour-text) 58%, transparent);
+    --border: var(--colour-border);
+    margin-top: 160px;
+    background: #2a1523;
+    border-top: 1px solid var(--border);
+    color: var(--fg2);
+  }
+
+  .footer-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 72px 56px 32px;
+  }
+
+  .footer-cols {
+    display: grid;
+    grid-template-columns: 1.3fr 0.8fr 0.8fr 1.1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .footer .brand {
+    width: fit-content;
+  }
+
+  .footer-tagline {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--muted-soft);
+    max-width: 300px;
+  }
+
+  .col-label {
+    margin: 0 0 16px;
+    font-size: 11px;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted-soft);
+  }
+
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-links a {
+    font-size: 13.5px;
+    color: var(--fg2);
+    text-decoration: none;
+    transition: color var(--motion-duration-fast) var(--motion-ease-standard);
+  }
+
+  .footer-links a:hover {
+    color: var(--fg1);
+  }
+
+  .footer-note-text {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--fg2);
+    text-wrap: pretty;
+  }
+
+  .footer-note-text em {
+    color: var(--colour-accent);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .footer-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(251, 228, 236, 0.08);
+    font-size: 12px;
+    color: var(--muted-soft);
+  }
+
+  .footer-colophon {
+    text-align: right;
+  }
+
   .fade-up {
     opacity: 0;
     transform: translateY(14px);
@@ -1164,6 +1405,41 @@ const writingPosts = [
 
     .about-content p.about-lead {
       font-size: 16.5px;
+    }
+
+    .shop-placeholder {
+      margin-top: 100px;
+    }
+
+    .footer {
+      margin-top: 100px;
+    }
+
+    .footer-inner {
+      padding: 52px 24px 24px;
+    }
+
+    .footer-cols {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 24px;
+    }
+
+    .footer-brand {
+      grid-column: span 2;
+    }
+
+    .footer-note {
+      grid-column: span 2;
+    }
+
+    .footer-meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .footer-colophon {
+      text-align: left;
     }
   }
 </style>
