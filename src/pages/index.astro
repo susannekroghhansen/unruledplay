@@ -1,35 +1,168 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { XMLParser } from "fast-xml-parser";
 
 const substackUrl = "https://bysukro.substack.com/";
+const substackFeedUrl = "https://bysukro.substack.com/feed";
 
-const featuredWriting = {
-  date: "7 Apr 2026",
-  title: "U is for Unfinished",
-  excerpt:
-    "If I had finished that sketch neatly and confidently, I suspect the conversation would have been shorter, politer, less honest. And maybe it would even have ended with a — oh Susanne you are such a talented artist (which I definitely do not consider myself to be).",
-};
-
-const writingPosts = [
+const fallbackWritingCards = [
+  {
+    date: "7 Apr 2026",
+    title: "U is for Unfinished",
+    excerpt:
+      "If I had finished that sketch neatly and confidently, I suspect the conversation would have been shorter, politer, less honest. And maybe it would even have ended with a — oh Susanne you are such a talented artist (which I definitely do not consider myself to be).",
+    link: substackUrl,
+    imageUrl: "",
+  },
   {
     date: "24 Mar 2026",
     title: "D is for Doodles",
     excerpt:
       "Somewhere along the way, doodling got itself a PR problem. A room full of smart adults, suddenly very fascinated by their laptops.",
+    link: substackUrl,
+    imageUrl: "",
   },
   {
     date: "14 Mar 2026",
     title: "Sketching abroad",
     excerpt:
       "Turns out that when you let go of perfection, your characters start to talk back. Mine are now sassier than I am. One is demanding a Vespa.",
+    link: substackUrl,
+    imageUrl: "",
   },
   {
     date: "12 Feb 2026",
     title: "Stop trying to be Spotify",
     excerpt:
       "We had the ingredients. But not the recipe. And worse — we were trying to follow someone else's cookbook.",
+    link: substackUrl,
+    imageUrl: "",
   },
 ];
+
+const parser = new XMLParser({
+  ignoreAttributes: false,
+  trimValues: true,
+  processEntities: true,
+});
+
+const excerptMaxLength = 200;
+const trailingPunctuationPattern = /[.,;:!?'"()\[\]{}-]+$/;
+
+const formatDate = (value) => {
+  const parsed = new Date(value ?? "");
+  if (Number.isNaN(parsed.getTime())) {
+    return "";
+  }
+
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(parsed);
+};
+
+const decodeHtmlEntities = (text) =>
+  text
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, code) =>
+      String.fromCodePoint(Number.parseInt(code, 16)),
+    );
+
+const toPlainText = (html = "") =>
+  decodeHtmlEntities(html)
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const buildExcerpt = (text) => {
+  if (text.length <= excerptMaxLength) {
+    return text.replace(trailingPunctuationPattern, "").trim();
+  }
+
+  const clipped = text.slice(0, excerptMaxLength);
+  const endAt = clipped.lastIndexOf(" ");
+  const bounded = (endAt > 0 ? clipped.slice(0, endAt) : clipped).trim();
+  return bounded.replace(trailingPunctuationPattern, "").trim();
+};
+
+const pickImageFromItem = (item) => {
+  const mediaContent = item["media:content"];
+  if (Array.isArray(mediaContent)) {
+    const mediaWithUrl = mediaContent.find((entry) => entry?.url);
+    if (mediaWithUrl?.url) {
+      return mediaWithUrl.url;
+    }
+  } else if (mediaContent?.url) {
+    return mediaContent.url;
+  }
+
+  const enclosure = item.enclosure;
+  if (Array.isArray(enclosure)) {
+    const imageEnclosure = enclosure.find((entry) =>
+      (entry?.type ?? "").startsWith("image/"),
+    );
+    if (imageEnclosure?.url) {
+      return imageEnclosure.url;
+    }
+  } else if ((enclosure?.type ?? "").startsWith("image/") && enclosure?.url) {
+    return enclosure.url;
+  }
+
+  const encodedContent = item["content:encoded"];
+  const encodedAsString = Array.isArray(encodedContent)
+    ? encodedContent.join(" ")
+    : encodedContent ?? "";
+  const imageMatch = encodedAsString.match(/<img[^>]+src=["']([^"']+)["']/i);
+  return imageMatch?.[1] ?? "";
+};
+
+const parseFeedItems = (xml) => {
+  const parsed = parser.parse(xml);
+  const rawItems = parsed?.rss?.channel?.item;
+  if (!rawItems) {
+    return [];
+  }
+
+  const items = Array.isArray(rawItems) ? rawItems : [rawItems];
+  return items.slice(0, 4).map((item) => {
+    const plainText = toPlainText(
+      item.description ?? item["content:encoded"] ?? "",
+    );
+
+    return {
+      title: (item.title ?? "").trim(),
+      link: (item.link ?? substackUrl).trim() || substackUrl,
+      date: formatDate(item.pubDate),
+      excerpt: buildExcerpt(plainText),
+      imageUrl: pickImageFromItem(item),
+    };
+  });
+};
+
+let writingCards = fallbackWritingCards;
+
+try {
+  const response = await fetch(substackFeedUrl);
+  if (response.ok) {
+    const xml = await response.text();
+    const parsedCards = parseFeedItems(xml).filter((card) => card.title && card.link);
+    if (parsedCards.length >= 1) {
+      writingCards = parsedCards;
+    }
+  }
+} catch {
+  writingCards = fallbackWritingCards;
+}
+
+const [featuredWriting, ...writingPosts] = writingCards;
 ---
 
 <Layout title="Unruled Play">
@@ -110,31 +243,28 @@ const writingPosts = [
 
       <a
         class="post-featured"
-        href={substackUrl}
+        href={featuredWriting.link}
         target="_blank"
         rel="noopener noreferrer"
       >
         <div class="post-featured-media">
-          <svg
-            class="post-featured-svg"
-            viewBox="0 0 120 120"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <path
-              d="M60 14 L106 42 L86 98 L34 98 L14 42 Z"
-              fill="currentColor"
-              opacity="0.22"
-            />
-            <path d="M60 14 L60 70 L14 42 Z" fill="currentColor" opacity="0.14" />
-            <path d="M60 14 L106 42 L60 70 Z" fill="currentColor" opacity="0.32" />
-            <path
-              d="M60 70 L86 98 L34 98 Z"
-              fill="currentColor"
-              opacity="0.2"
-            />
-          </svg>
+          {featuredWriting.imageUrl && <img class="post-featured-svg" src={featuredWriting.imageUrl} alt="" loading="lazy" />}
+          {!featuredWriting.imageUrl && (
+            <svg class="post-featured-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path
+                d="M60 14 L106 42 L86 98 L34 98 L14 42 Z"
+                fill="currentColor"
+                opacity="0.22"
+              />
+              <path d="M60 14 L60 70 L14 42 Z" fill="currentColor" opacity="0.14" />
+              <path d="M60 14 L106 42 L60 70 Z" fill="currentColor" opacity="0.32" />
+              <path
+                d="M60 70 L86 98 L34 98 Z"
+                fill="currentColor"
+                opacity="0.2"
+              />
+            </svg>
+          )}
         </div>
         <div class="post-featured-body">
           <div class="post-featured-top">
@@ -148,11 +278,11 @@ const writingPosts = [
       </a>
 
       <div class="posts-row">
-        {
-          writingPosts.map((post) => (
+        {writingPosts.map((post) => {
+          return (
             <a
               class="post-card"
-              href={substackUrl}
+              href={post.link}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -161,8 +291,8 @@ const writingPosts = [
               <p class="post-excerpt">{post.excerpt}</p>
               <span class="post-cta">Read →</span>
             </a>
-          ))
-        }
+          );
+        })}
       </div>
 
       <footer class="writing-footer">
